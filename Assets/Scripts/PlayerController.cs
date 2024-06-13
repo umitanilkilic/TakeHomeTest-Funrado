@@ -3,43 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(PlayerManager))]
 public class PlayerController : MonoBehaviour
 {
-    public FixedJoystick joystick;
-    public float movementSpeed = 5f;
-    public float gravity = -9.81f;
-    public float rotationSpeed = 10f;
-    public float smoothTurnTime = 0.1f;
+    public FixedJoystick Joystick;
+    public float MovementSpeed = 5f;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float smoothTurnTime = 0.1f;
     private float turnSmoothVelocity;
-
-    public TextMeshProUGUI levelText;
-
     private CharacterController characterController;
-    private int playerLevel = 1;
     private Vector3 velocity;
 
     public Animator playerAnimator;
 
-    public int PlayerLevel
-    {
-        get => playerLevel;
-        set
-        {
-            playerLevel = value;
-            levelText.text = $"Lv. {playerLevel}";
-        }
-    }
-
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        levelText = GetComponentInChildren<TextMeshProUGUI>();
-    }
-
-    private void Start()
-    {
-        PlayerLevel = 1;
     }
 
     private void Update()
@@ -49,8 +28,8 @@ public class PlayerController : MonoBehaviour
 
     private void MoveAndRotateCharacter()
     {
-        float h = joystick.Horizontal;
-        float v = joystick.Vertical;
+        float h = Joystick.Horizontal;
+        float v = Joystick.Vertical;
 
         Vector3 moveDirection = new Vector3(h, 0f, v);
 
@@ -60,7 +39,7 @@ public class PlayerController : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, smoothTurnTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            characterController.Move(transform.forward * movementSpeed * Time.deltaTime);
+            characterController.Move(transform.forward * MovementSpeed * Time.deltaTime);
             playerAnimator.Play("Run");
         }
         else
