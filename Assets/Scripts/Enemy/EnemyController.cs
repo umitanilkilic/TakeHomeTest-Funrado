@@ -5,35 +5,22 @@ using UnityEngine.AI;
 using TMPro;
 using System.Threading;
 
-public class EnemyController : MonoBehaviour
+public abstract class EnemyController : MonoBehaviour
 {
-    public enum EnemyType { Patrol, Stationary, Rotating }
-    public EnemyType enemyType;
-
+    [Header("Enemy Attributes")]
     public TextMeshProUGUI levelText;
     public int enemyLevel = 10;
-    public Transform[] waypoints;
-    public float waitTime = 3f;
-    public float rotationSpeed = 180f;
-    public float rotationWaitTime = 2f;
-
     public LayerMask obstacleLayerMask;
     public float enemyVisionRange;
-
     public float angleOfVision;
-
     public int visionConeResolution = 60;
 
-    private int currentWaypointIndex = 0;
-    private Animator animator;
-    private NavMeshAgent navMeshAgent;
-
-
+    protected Animator animator;
+    protected NavMeshAgent navMeshAgent;
     private Mesh visionConeMesh;
-
     private MeshFilter meshFilter;
 
-    void Start()
+    protected virtual void Start()
     {
         GetComponent<MeshRenderer>().material = new Material(Shader.Find("Standard"));
         meshFilter = GetComponent<MeshFilter>();
@@ -43,84 +30,15 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        switch (enemyType)
-        {
-            case EnemyType.Patrol:
-                StartCoroutine(Patrol());
-                break;
-            case EnemyType.Stationary:
-                StartCoroutine(Stationary());
-                break;
-            case EnemyType.Rotating:
-                StartCoroutine(Rotating());
-                break;
-        }
+        InitializeEnemy();
     }
+
+    protected abstract void InitializeEnemy();
 
     void Update()
     {
         ComputeFieldOfView();
     }
-
-    IEnumerator Patrol()
-    {
-        while (true)
-        {
-            if (waypoints.Length > 0)
-            {
-                animator.SetBool("isRunning", true);
-                navMeshAgent.SetDestination(waypoints[currentWaypointIndex].position);
-                yield return new WaitUntil(() => navMeshAgent.remainingDistance < 0.1f && !navMeshAgent.pathPending);
-                animator.SetBool("isRunning", false);
-                yield return new WaitForSeconds(waitTime);
-                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-            }
-            else
-            {
-                yield return null;
-            }
-        }
-    }
-
-    IEnumerator Stationary()
-    {
-        while (true)
-        {
-            yield return null;
-        }
-    }
-
-    IEnumerator Rotating()
-    {
-        while (true)
-        {
-            // +180 derece dön
-            yield return Rotate(180);
-            // Bekle
-            yield return new WaitForSeconds(rotationWaitTime);
-            // -180 derece dön
-            yield return Rotate(-180);
-            // Bekle
-            yield return new WaitForSeconds(rotationWaitTime);
-        }
-    }
-
-    IEnumerator Rotate(float angle)
-    {
-        float rotated = 0;
-        float targetRotation = Mathf.Abs(angle);
-        float rotationDirection = Mathf.Sign(angle);
-
-        while (rotated < targetRotation)
-        {
-            float rotationThisFrame = rotationSpeed * Time.deltaTime;
-            rotationThisFrame = Mathf.Min(rotationThisFrame, targetRotation - rotated);
-            transform.Rotate(0, rotationThisFrame * rotationDirection, 0);
-            rotated += rotationThisFrame;
-            yield return null;
-        }
-    }
-
 
     void ComputeFieldOfView()
     {
@@ -170,10 +88,9 @@ public class EnemyController : MonoBehaviour
         meshFilter.mesh = visionConeMesh;
     }
 
-    private void Attack()
+    void Attack()
     {
         animator.SetTrigger("Attack");
         //Playeri öldür
     }
-
 }
