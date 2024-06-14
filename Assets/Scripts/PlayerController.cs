@@ -40,11 +40,11 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             characterController.Move(transform.forward * MovementSpeed * Time.deltaTime);
-            playerAnimator.Play("Run");
+            playerAnimator.SetBool("isRunning", true);
         }
         else
         {
-            playerAnimator.Play("Idle");
+            playerAnimator.SetBool("isRunning", false);
         }
 
         velocity.y += gravity * Time.deltaTime;

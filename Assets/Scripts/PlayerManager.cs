@@ -8,6 +8,7 @@ using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
+    public PlayerController playerController;
     public TextMeshProUGUI levelText;
     private int playerLevel = 1;
     public int PlayerLevel
@@ -21,10 +22,29 @@ public class PlayerManager : MonoBehaviour
     }
     private void Start()
     {
-        PlayerLevel = 1;
+        PlayerLevel = 10;
     }
     public void LevelUpPlayer()
     {
         PlayerLevel++;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy hit");
+            var enemyController = hit.gameObject.GetComponent<EnemyController>();
+            if (enemyController.enemyLevel <= playerLevel)
+            {
+                enemyController.Die();
+                playerController.playerAnimator.SetTrigger("Attack");
+            }
+            else
+            {
+                enemyController.AttackPlayer();
+            }
+            playerController.playerAnimator.SetTrigger("Attack");
+        }
     }
 }
