@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 
 [RequireComponent(typeof(PlayerController))]
 
 public class PlayerManager : MonoBehaviour
 {
+    public Action OnPlayerDeath;
+    public Action OnPlayerLevelUp;
     public PlayerController playerController;
     public TextMeshProUGUI levelText;
     private int playerLevel = 1;
@@ -28,23 +31,30 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerLevel++;
     }
+    
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    void OnCollisionEnter(Collision collision)
     {
-        if (hit.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Enemy hit");
-            var enemyController = hit.gameObject.GetComponent<EnemyController>();
+            var enemyController = collision.gameObject.GetComponent<EnemyController>();
             if (enemyController.enemyLevel <= playerLevel)
             {
                 enemyController.Die();
                 playerController.playerAnimator.SetTrigger("Attack");
             }
-            else
-            {
-                enemyController.AttackPlayer();
-            }
-            playerController.playerAnimator.SetTrigger("Attack");
         }
+    }
+
+    public void Die()
+    {
+        playerController.playerAnimator.Play("Death");
+        OnPlayerDeath?.Invoke();
+    }
+
+    public void LevelUp()
+    {
+        PlayerLevel++;
+        OnPlayerLevelUp?.Invoke();
     }
 }

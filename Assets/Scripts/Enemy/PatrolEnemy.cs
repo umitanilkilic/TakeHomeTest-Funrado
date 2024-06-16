@@ -36,4 +36,12 @@ public class PatrolEnemy : EnemyController
             }
         }
     }
+
+    public override void Die()
+    {
+        navMeshAgent.SetDestination(transform.position);
+        StopAllCoroutines();
+        animator.Play("Death");
+        StartCoroutine(DieAfterAnimation());
+    }
 }

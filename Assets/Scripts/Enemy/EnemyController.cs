@@ -15,6 +15,8 @@ public abstract class EnemyController : MonoBehaviour
     public float angleOfVision;
     public int visionConeResolution = 60;
 
+    public Material visionConeMaterial;
+
     protected Animator animator;
     protected NavMeshAgent navMeshAgent;
     private Mesh visionConeMesh;
@@ -22,10 +24,11 @@ public abstract class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        GetComponent<MeshRenderer>().material = new Material(Shader.Find("Standard"));
+        GetComponent<MeshRenderer>().material = visionConeMaterial;
         meshFilter = GetComponent<MeshFilter>();
         visionConeMesh = new Mesh();
         angleOfVision *= Mathf.Deg2Rad;
+        levelText.text = $"Lv. {enemyLevel}";
 
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -65,7 +68,7 @@ public abstract class EnemyController : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
-                    Attack();
+                    Attack(hit.collider.gameObject);
                 }
             }
             else
@@ -88,9 +91,36 @@ public abstract class EnemyController : MonoBehaviour
         meshFilter.mesh = visionConeMesh;
     }
 
-    void Attack()
+    protected virtual void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Attack(other.gameObject);
+        }
+    }
+
+    void Attack(GameObject player)
+    {
+        if (player.GetComponent<PlayerManager>().PlayerLevel >= enemyLevel)
+        {
+            return;
+        }
+        
+        navMeshAgent.SetDestination(transform.position);
+        player.GetComponent<PlayerManager>().Die();
         animator.SetTrigger("Attack");
-        //Playeri öldür
+    }
+
+    public virtual void Die()
+    {
+        StopAllCoroutines();
+        animator.Play("Death");
+        StartCoroutine(DieAfterAnimation());
+    }
+
+    protected IEnumerator DieAfterAnimation()
+    {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        Destroy(gameObject);
     }
 }

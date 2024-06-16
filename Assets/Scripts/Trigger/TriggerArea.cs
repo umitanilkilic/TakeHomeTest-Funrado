@@ -8,7 +8,7 @@ public class TriggerArea : MonoBehaviour
     public bool isOneTimeTrigger;
     public UnityEvent triggerEvent;
 
-    private void Start()
+    void Start()
     {
         if(isOneTimeTrigger){
             triggerEvent.AddListener(() => {
