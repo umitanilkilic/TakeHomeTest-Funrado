@@ -3,52 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(CharacterController), typeof(PlayerManager))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerManager))]
 public class PlayerController : MonoBehaviour
 {
     public FixedJoystick Joystick;
     public float MovementSpeed = 5f;
-    [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float smoothTurnTime = 0.1f;
-    private float turnSmoothVelocity;
-    private CharacterController characterController;
-    private Vector3 velocity;
+    public float RotationSpeed = 10f;
 
+    private Rigidbody rb;
     public Animator playerAnimator;
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+ private void FixedUpdate() 
+{
+    MoveAndRotateCharacter();
+}
+
+private void MoveAndRotateCharacter()
+{
+    float horizontalInput = Joystick.Horizontal;
+    float verticalInput = Joystick.Vertical;
+
+    Vector3 moveDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
+    if (moveDirection.magnitude > 0.01f)
     {
-        MoveAndRotateCharacter();
-    }
+        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, RotationSpeed * Time.fixedDeltaTime)); 
 
-    private void MoveAndRotateCharacter()
+        rb.MovePosition(rb.position + moveDirection * MovementSpeed * Time.fixedDeltaTime);
+
+        playerAnimator.SetBool("isRunning", true);
+    }
+    else
     {
-        float h = Joystick.Horizontal;
-        float v = Joystick.Vertical;
-
-        Vector3 moveDirection = new Vector3(h, 0f, v);
-
-        if (moveDirection.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, smoothTurnTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            characterController.Move(transform.forward * MovementSpeed * Time.deltaTime);
-            playerAnimator.SetBool("isRunning", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("isRunning", false);
-        }
-
-        velocity.y += gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
+        playerAnimator.SetBool("isRunning", false);
     }
-
+}
 }
