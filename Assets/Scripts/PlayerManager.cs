@@ -10,7 +10,7 @@ using System;
 public class PlayerManager : MonoBehaviour
 {
     public Action OnPlayerDeath;
-    public Action OnPlayerLevelUp;
+    public Action<int> OnPlayerLevelUp;
     public PlayerController playerController;
     public TextMeshProUGUI levelText;
     private int playerLevel = 1;
@@ -48,6 +48,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Die()
     {
+        playerController.disableControls = true;
         playerController.playerAnimator.Play("Death");
         OnPlayerDeath?.Invoke();
     }
@@ -55,6 +56,6 @@ public class PlayerManager : MonoBehaviour
     public void LevelUp()
     {
         PlayerLevel++;
-        OnPlayerLevelUp?.Invoke();
+        OnPlayerLevelUp?.Invoke(PlayerLevel);
     }
 }
