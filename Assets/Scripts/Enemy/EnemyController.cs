@@ -123,7 +123,7 @@ public abstract class EnemyController : MonoBehaviour
 
     void Attack(GameObject player)
     {
-        if (player.GetComponent<PlayerManager>().PlayerLevel >= enemyLevel)
+        if (player.GetComponent<PlayerManager>().playerLevel >= enemyLevel)
         {
             return;
         }

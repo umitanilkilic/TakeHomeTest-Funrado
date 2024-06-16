@@ -12,25 +12,18 @@ public class PlayerManager : MonoBehaviour
     public GameManager gameManager;
     public PlayerController playerController;
     public TextMeshProUGUI levelText;
-    private int playerLevel = 1;
-    public int PlayerLevel
-    {
-        get => playerLevel;
-        set
-        {
-            playerLevel = value;
-            levelText.text = $"Lv. {playerLevel}";
-        }
-    }
+    public int playerLevel = 1;
+
     private void Start()
     {
-        PlayerLevel = 10;
-        gameManager.PlayerLevelUp(PlayerLevel);
+        playerLevel = 10;
+        gameManager.PlayerLevelUp(playerLevel);
     }
     public void LevelUpPlayer()
     {
-        PlayerLevel++;
-        gameManager.PlayerLevelUp(PlayerLevel);
+        playerLevel++;
+        levelText.text = $"Lv. {playerLevel}";
+        gameManager.PlayerLevelUp(playerLevel);
     }
     
 
