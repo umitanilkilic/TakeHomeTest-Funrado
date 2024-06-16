@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TriggerArea : MonoBehaviour
+public abstract class TriggerArea : MonoBehaviour
 {
+    public GameManager gameManager;
     public bool isOneTimeTrigger;
     public UnityEvent triggerEvent;
 

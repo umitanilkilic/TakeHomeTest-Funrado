@@ -13,35 +13,42 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public Animator playerAnimator;
 
+    public bool disableControls = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
- private void FixedUpdate() 
-{
-    MoveAndRotateCharacter();
-}
-
-private void MoveAndRotateCharacter()
-{
-    float horizontalInput = Joystick.Horizontal;
-    float verticalInput = Joystick.Vertical;
-
-    Vector3 moveDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-
-    if (moveDirection.magnitude > 0.01f)
+    private void FixedUpdate()
     {
-        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-        rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, RotationSpeed * Time.fixedDeltaTime)); 
-
-        rb.MovePosition(rb.position + moveDirection * MovementSpeed * Time.fixedDeltaTime);
-
-        playerAnimator.SetBool("isRunning", true);
+        MoveAndRotateCharacter();
     }
-    else
+
+    private void MoveAndRotateCharacter()
     {
-        playerAnimator.SetBool("isRunning", false);
+        if (disableControls)
+        {
+            return;
+        }
+
+        float horizontalInput = Joystick.Horizontal;
+        float verticalInput = Joystick.Vertical;
+
+        Vector3 moveDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
+        if (moveDirection.magnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, RotationSpeed * Time.fixedDeltaTime));
+
+            rb.MovePosition(rb.position + moveDirection * MovementSpeed * Time.fixedDeltaTime);
+
+            playerAnimator.SetBool("isRunning", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("isRunning", false);
+        }
     }
-}
 }

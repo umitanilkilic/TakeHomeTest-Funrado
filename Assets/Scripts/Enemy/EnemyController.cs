@@ -8,6 +8,7 @@ using System.Threading;
 public abstract class EnemyController : MonoBehaviour
 {
     [Header("Enemy Attributes")]
+    public GameManager gameManager;
     public TextMeshProUGUI levelText;
     public int enemyLevel = 10;
     public LayerMask obstacleLayerMask;
@@ -22,18 +23,39 @@ public abstract class EnemyController : MonoBehaviour
     private Mesh visionConeMesh;
     private MeshFilter meshFilter;
 
-    protected virtual void Start()
+    private void OnEnable()
+    {
+        gameManager.OnPlayerLevelUp.AddListener(ReactToPlayerLevelUp);
+    }
+
+    private void OnDisable()
+    {
+        gameManager.OnPlayerLevelUp.RemoveListener(ReactToPlayerLevelUp);
+    }
+
+    protected virtual void Awake()
     {
         GetComponent<MeshRenderer>().material = visionConeMaterial;
         meshFilter = GetComponent<MeshFilter>();
         visionConeMesh = new Mesh();
         angleOfVision *= Mathf.Deg2Rad;
         levelText.text = $"Lv. {enemyLevel}";
+        levelText.color = Color.red;
 
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         InitializeEnemy();
+    }
+
+    void ReactToPlayerLevelUp(int level)
+    {
+        Debug.Log("Player Level: " + level + " Enemy Level: " + enemyLevel + " Level Text: " + levelText.text + " Enemy Level Text: " + $"Lv. {enemyLevel}");
+        if (level >= enemyLevel)
+        {
+            levelText.text = $"Lv. {enemyLevel}";
+            levelText.color = Color.green;
+        }
     }
 
     protected abstract void InitializeEnemy();
@@ -105,7 +127,7 @@ public abstract class EnemyController : MonoBehaviour
         {
             return;
         }
-        
+
         navMeshAgent.SetDestination(transform.position);
         player.GetComponent<PlayerManager>().Die();
         animator.SetTrigger("Attack");

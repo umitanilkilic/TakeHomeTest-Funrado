@@ -1,24 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerManager playerManager;
+    public UnityEvent OnPlayerDeath;
+    public UnityEvent<int> OnPlayerLevelUp;
 
-    private void Start()
+    public UnityEvent<string> OnKeyCollected;
+
+    public void PlayerDeath()
     {
-        playerManager.OnPlayerDeath += PlayerManager_OnPlayerDeath;
-        playerManager.OnPlayerLevelUp += PlayerManager_OnPlayerLevelUp;
+        OnPlayerDeath?.Invoke();
     }
 
-    private void PlayerManager_OnPlayerDeath()
+    public void PlayerLevelUp(int level)
     {
-        Debug.Log("Player died");
+        OnPlayerLevelUp?.Invoke(level);
     }
 
-    private void PlayerManager_OnPlayerLevelUp()
+    public void AddKey(string keyId)
     {
-        Debug.Log("Player leveled up");
+        OnKeyCollected?.Invoke(keyId);
     }
 }
