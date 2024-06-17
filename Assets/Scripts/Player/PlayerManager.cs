@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         UpdateLevelText();
-        UpdateLevelText();
+        NotifyGameManager();
     }
     public void LevelUpPlayer()
     {
@@ -51,6 +51,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Die()
     {
+        GetComponent<Rigidbody>().isKinematic = true;
         playerController.disableControls = true;
         playerController.playerAnimator.Play("Death");
         GameManager.Instance.PlayerDeath();

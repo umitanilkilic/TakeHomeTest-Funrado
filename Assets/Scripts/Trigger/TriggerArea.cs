@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class TriggerArea : MonoBehaviour
+public abstract class EventTrigger : MonoBehaviour
 {
     public GameManager gameManager;
     public bool isOneTimeTrigger;

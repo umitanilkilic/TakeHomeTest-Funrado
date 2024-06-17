@@ -60,9 +60,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2158387511130953908}
   m_SourcePrefab: {fileID: 100100000, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
---- !u!114 &8152578047479488095 stripped
+--- !u!114 &6991099614366594706 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6195172104254209906, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5034754666439792575, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
   m_PrefabInstance: {fileID: 2655552297514475821}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -88,8 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cea4aa4bc1d56240b8c408e3857e636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  levelText: {fileID: 8152578047479488095}
+  levelText: {fileID: 6991099614366594706}
   enemyLevel: 10
   obstacleLayerMask:
     serializedVersion: 2

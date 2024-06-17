@@ -22,15 +22,10 @@ public abstract class EnemyController : MonoBehaviour
     private Mesh visionConeMesh;
     private MeshFilter meshFilter;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         GameManager.Instance.OnPlayerLevelUp.AddListener(ReactToPlayerLevelUp);
-    }
-
-    private void OnDisable()
-    {
-        GameManager.Instance.OnPlayerLevelUp.RemoveListener(ReactToPlayerLevelUp);
-    }
+    }   
 
     protected virtual void Awake()
     {
@@ -49,7 +44,6 @@ public abstract class EnemyController : MonoBehaviour
 
     void ReactToPlayerLevelUp(int level)
     {
-        Debug.Log("Player Level: " + level + " Enemy Level: " + enemyLevel + " Level Text: " + levelText.text + " Enemy Level Text: " + $"Lv. {enemyLevel}");
         if (level >= enemyLevel)
         {
             levelText.text = $"Lv. {enemyLevel}";
@@ -89,7 +83,6 @@ public abstract class EnemyController : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
-                    Debug.Log("Player Detected");
                     Attack(hit.collider.gameObject);
                 }
             }

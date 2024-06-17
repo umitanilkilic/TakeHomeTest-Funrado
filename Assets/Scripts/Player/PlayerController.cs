@@ -6,7 +6,7 @@ using TMPro;
 [RequireComponent(typeof(Rigidbody), typeof(PlayerManager))]
 public class PlayerController : MonoBehaviour
 {
-    public FixedJoystick Joystick;
+    public Joystick joystick;
     public float MovementSpeed = 5f;
     public float RotationSpeed = 10f;
 
@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        float horizontalInput = Joystick.Horizontal;
-        float verticalInput = Joystick.Vertical;
+        float horizontalInput = joystick.Horizontal;
+        float verticalInput = joystick.Vertical;
 
         Vector3 moveDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 

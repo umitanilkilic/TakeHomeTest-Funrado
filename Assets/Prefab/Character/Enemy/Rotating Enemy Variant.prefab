@@ -60,17 +60,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5588904223698193540}
   m_SourcePrefab: {fileID: 100100000, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
---- !u!114 &20061246612887473 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6195172104254209906, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
-  m_PrefabInstance: {fileID: 6178632665393522883}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &761966872965084858 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6858390115875888761, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
@@ -88,8 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270b118cdf4786446be4ca486f7477c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  levelText: {fileID: 20061246612887473}
+  levelText: {fileID: 1180474294296493948}
   enemyLevel: 10
   obstacleLayerMask:
     serializedVersion: 2
@@ -100,3 +88,14 @@ MonoBehaviour:
   visionConeMaterial: {fileID: 2100000, guid: f9810d58ba706794a811a3344228c852, type: 2}
   rotationSpeed: 180
   rotationWaitTime: 2
+--- !u!114 &1180474294296493948 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5034754666439792575, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
+  m_PrefabInstance: {fileID: 6178632665393522883}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

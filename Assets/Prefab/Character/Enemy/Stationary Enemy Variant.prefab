@@ -77,19 +77,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f39aed4c321bed49bff5fda162031ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  levelText: {fileID: 3420276796713742285}
+  levelText: {fileID: 4562679845548148480}
   enemyLevel: 10
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   enemyVisionRange: 2
   angleOfVision: 120
   visionConeResolution: 10
   visionConeMaterial: {fileID: 2100000, guid: f9810d58ba706794a811a3344228c852, type: 2}
---- !u!114 &3420276796713742285 stripped
+--- !u!114 &4562679845548148480 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6195172104254209906, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5034754666439792575, guid: d88ddea947fce1349bd7f929e36cb7bd, type: 3}
   m_PrefabInstance: {fileID: 8831259340835459263}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

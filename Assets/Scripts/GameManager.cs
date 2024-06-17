@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+    public float resetTime = 4f;
 
 
     public UnityEvent OnPlayerDeath;
@@ -41,9 +42,9 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDeath()
     {
-        Debug.Log("Player Died");
         OnPlayerDeath?.Invoke();
-        Invoke("RestartGame", 2f);
+        Debug.Log($"Player died, restarting game in {resetTime} seconds...");
+        Invoke("RestartGame", resetTime);
     }
 
     public void PlayerLevelUp(int level)
@@ -54,6 +55,18 @@ public class GameManager : MonoBehaviour
     public void AddKey(string keyId)
     {
         OnKeyCollected?.Invoke(keyId);
+    }
+
+    public void NextLevel()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     private void RestartGame()
