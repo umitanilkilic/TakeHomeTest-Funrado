@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3552816066945367871}
   - component: {fileID: 3978876666198917107}
   m_Layer: 0
-  m_Name: Cube.001
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -182,6 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7148607195010296632}
+  - component: {fileID: 4846815830108380148}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -206,6 +207,22 @@ Transform:
   - {fileID: 6635437819714524542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4846815830108380148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7529777727743963522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea8b182322bdbb46966b99b7b83751b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocked: 1
+  doorId: Blue
+  leftDoor: {fileID: 8012518016373538487}
+  rightDoor: {fileID: 2046954913196002499}
 --- !u!1 &8012518016373538487
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +238,7 @@ GameObject:
   - component: {fileID: 861034470946192800}
   - component: {fileID: 552170717591918514}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,7 +388,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

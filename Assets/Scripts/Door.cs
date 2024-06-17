@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public GameManager gameManager;
     public bool isLocked = false;
 
     public string doorId;
@@ -15,12 +14,10 @@ public class Door : MonoBehaviour
     private Rigidbody rightDoorRb;
 
     private void OnEnable() {
-        gameManager.OnKeyCollected.AddListener(OnNotify);
+        GameManager.Instance.OnKeyCollected.AddListener(OnNotify);
     }
 
-    private void OnDisable() {
-        gameManager.OnKeyCollected.RemoveListener(OnNotify);
-    }
+
 
     void Start()
     {

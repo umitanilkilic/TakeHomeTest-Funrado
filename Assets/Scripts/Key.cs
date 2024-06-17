@@ -10,8 +10,7 @@ public class Key : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            var playerManager = other.GetComponent<PlayerManager>();
-            playerManager.gameManager.AddKey(keyId);
+            GameManager.Instance.AddKey(keyId);
             Destroy(gameObject);
         }
     }

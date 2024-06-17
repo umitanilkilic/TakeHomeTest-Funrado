@@ -9,23 +9,32 @@ using System;
 
 public class PlayerManager : MonoBehaviour
 {
-    public GameManager gameManager;
     public PlayerController playerController;
     public TextMeshProUGUI levelText;
     public int playerLevel = 1;
 
     private void Start()
     {
-        playerLevel = 10;
-        gameManager.PlayerLevelUp(playerLevel);
+        UpdateLevelText();
+        UpdateLevelText();
     }
     public void LevelUpPlayer()
     {
         playerLevel++;
-        levelText.text = $"Lv. {playerLevel}";
-        gameManager.PlayerLevelUp(playerLevel);
+        UpdateLevelText();
+        NotifyGameManager();
     }
-    
+
+    private void UpdateLevelText()
+    {
+        levelText.text = $"Lv. {playerLevel}";
+    }
+
+    private void NotifyGameManager()
+    {
+        GameManager.Instance.PlayerLevelUp(playerLevel);
+    }
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -44,6 +53,6 @@ public class PlayerManager : MonoBehaviour
     {
         playerController.disableControls = true;
         playerController.playerAnimator.Play("Death");
-        gameManager.PlayerDeath();
+        GameManager.Instance.PlayerDeath();
     }
 }

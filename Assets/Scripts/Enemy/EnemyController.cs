@@ -8,7 +8,6 @@ using System.Threading;
 public abstract class EnemyController : MonoBehaviour
 {
     [Header("Enemy Attributes")]
-    public GameManager gameManager;
     public TextMeshProUGUI levelText;
     public int enemyLevel = 10;
     public LayerMask obstacleLayerMask;
@@ -25,12 +24,12 @@ public abstract class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
-        gameManager.OnPlayerLevelUp.AddListener(ReactToPlayerLevelUp);
+        GameManager.Instance.OnPlayerLevelUp.AddListener(ReactToPlayerLevelUp);
     }
 
     private void OnDisable()
     {
-        gameManager.OnPlayerLevelUp.RemoveListener(ReactToPlayerLevelUp);
+        GameManager.Instance.OnPlayerLevelUp.RemoveListener(ReactToPlayerLevelUp);
     }
 
     protected virtual void Awake()
@@ -74,7 +73,7 @@ public abstract class EnemyController : MonoBehaviour
         float angleIncrement = angleOfVision / (visionConeResolution - 1);
         float currentAngle = -angleOfVision / 2;
 
-        Vector3 adjustedPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        Vector3 adjustedPos = new Vector3(transform.position.x+0.1f, transform.position.y + 1, transform.position.z);
 
         for (int i = 0; i < visionConeResolution; i++)
         {
@@ -90,6 +89,7 @@ public abstract class EnemyController : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
+                    Debug.Log("Player Detected");
                     Attack(hit.collider.gameObject);
                 }
             }
@@ -136,6 +136,7 @@ public abstract class EnemyController : MonoBehaviour
     public virtual void Die()
     {
         StopAllCoroutines();
+        GetComponent<Collider>().enabled = false;
         animator.Play("Death");
         StartCoroutine(DieAfterAnimation());
     }

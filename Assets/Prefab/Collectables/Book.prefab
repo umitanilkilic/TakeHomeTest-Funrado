@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6161894801259421030}
   - component: {fileID: 6161894801260539886}
   - component: {fileID: 5895314801065794365}
-  - component: {fileID: 696226504008411050}
+  - component: {fileID: 5962957772545006654}
   m_Layer: 0
   m_Name: Book
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.16698514, y: 0.19712885, z: 0.08495254}
   m_Center: {x: 0, y: -0.00000019371508, z: 0.000000009313225}
---- !u!114 &696226504008411050
+--- !u!114 &5962957772545006654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,22 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6161894801258575576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45022d524124a06438252197d7c26420, type: 3}
+  m_Script: {fileID: 11500000, guid: c34984f506de9474ea58f56c31c3389a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOneTimeTrigger: 1
-  triggerEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: LevelUpPlayer
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
